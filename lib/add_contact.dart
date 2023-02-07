@@ -8,11 +8,8 @@ class AddContact extends StatefulWidget {
 }
 
 class _AddContactState extends State<AddContact> {
-  CollectionReference contacts = FirebaseFirestore.instance.collection('contacts');
   final nameController = TextEditingController();
   final contactNumberController = TextEditingController();
-  
-
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -52,25 +49,26 @@ class _AddContactState extends State<AddContact> {
             ),
 
             // Submit Button
-            ElevatedButton(onPressed: () async{
-
-              // Add Contact to List
-              await contacts.add({
-                "name": nameController.text,
-                "phone": contactNumberController.text,
-              }).then((value) => print('user added'));
-              
-              // Clear Text Fields
-              nameController.clear();
-              contactNumberController.clear();
-
-              // Show SnackBar
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Contact Added Successfully"),
-                ),
-              );
-            }, child: const Text("ADD"))
+            ElevatedButton(
+                onPressed: () async {
+                  // Add Contact to List
+                  await FirebaseFirestore.instance
+                      .collection("contacts")
+                      .add({
+                    "name": nameController.text,
+                    "contactNumber": contactNumberController.text,
+                  });
+                  // Clear Text Fields
+                  nameController.clear();
+                  contactNumberController.clear();
+                  // Show SnackBar
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Contact Added Successfully"),
+                    ),
+                  );
+                },
+                child: const Text("ADD"))
           ],
         ),
       ),
