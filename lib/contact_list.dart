@@ -38,3 +38,28 @@ final List<Map<String, String>>  contacts = [
     "phone": "7985641865",
   },
 ];
+
+
+// class Contacts{
+//   final String name;
+//   final String phone;
+
+//   Contacts({required this.name, required this.phone});
+  
+//   toJson(){
+//     return {
+//       "name": name,
+//       "phone": phone,
+//     };
+//   }
+
+//   factory Contacts.fromSnapshot(Map<String, dynamic> json){
+//     return Contacts(
+//       name: json['name'],
+//       phone: json['phone'],
+//     );
+//   }
+
+
+
+// }

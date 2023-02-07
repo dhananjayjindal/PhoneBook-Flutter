@@ -1,6 +1,8 @@
 import 'export.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   runApp(const MyApp());
 }
@@ -64,7 +66,8 @@ class MyHomePage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: ((context) => const AddContact())));
+                              builder: ((context) =>
+                                  const AddContact())));
                     },
                     child: const Text("ADD CONTACT"))
               ],

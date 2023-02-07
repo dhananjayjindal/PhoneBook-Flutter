@@ -10,8 +10,11 @@ class AddContact extends StatefulWidget {
 class _AddContactState extends State<AddContact> {
   final nameController = TextEditingController();
   final contactNumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    CollectionReference contacts =
+        FirebaseFirestore.instance.collection("contacts");
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
@@ -50,25 +53,21 @@ class _AddContactState extends State<AddContact> {
 
             // Submit Button
             ElevatedButton(
-                onPressed: () async {
-                  // Add Contact to List
-                  await FirebaseFirestore.instance
-                      .collection("contacts")
-                      .add({
-                    "name": nameController.text,
-                    "contactNumber": contactNumberController.text,
-                  });
-                  // Clear Text Fields
-                  nameController.clear();
-                  contactNumberController.clear();
-                  // Show SnackBar
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Contact Added Successfully"),
-                    ),
-                  );
-                },
-                child: const Text("ADD"))
+              onPressed: () {
+                contacts
+                    .add({
+                      "name": nameController.text,
+                      "phone": contactNumberController.text,
+                    })
+                    .then((value) => const SnackBar(
+                          content: Text("Contact Added"),
+                        ))
+                    .catchError((error) => const SnackBar(
+                          content: Text("Error Adding Contact"),
+                        ));
+              },
+              child: const Text("ADD"),
+            ),
           ],
         ),
       ),
