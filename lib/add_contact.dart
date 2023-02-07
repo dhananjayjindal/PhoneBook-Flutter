@@ -65,6 +65,7 @@ class _AddContactState extends State<AddContact> {
                     .catchError((error) => const SnackBar(
                           content: Text("Error Adding Contact"),
                         ));
+                        Navigator.pop(context);
               },
               child: const Text("ADD"),
             ),
