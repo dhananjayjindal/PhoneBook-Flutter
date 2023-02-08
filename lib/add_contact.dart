@@ -54,18 +54,25 @@ class _AddContactState extends State<AddContact> {
             // Submit Button
             ElevatedButton(
               onPressed: () {
-                contacts
-                    .add({
-                      "name": nameController.text,
-                      "phone": contactNumberController.text,
-                    })
-                    .then((value) => const SnackBar(
-                          content: Text("Contact Added"),
-                        ))
-                    .catchError((error) => const SnackBar(
-                          content: Text("Error Adding Contact"),
-                        ));
-                        Navigator.pop(context);
+                if (nameController.text.isEmpty ||
+                    contactNumberController.text.isEmpty) {
+                  const SnackBar(
+                    content: Text("Details missing"),
+                  );
+                } else {
+                  contacts
+                      .add({
+                        "name": nameController.text,
+                        "phone": contactNumberController.text,
+                      })
+                      .then((value) => const SnackBar(
+                            content: Text("Contact Added"),
+                          ))
+                      .catchError((error) => const SnackBar(
+                            content: Text("Error Adding Contact"),
+                          ));
+                  Navigator.pop(context);
+                }
               },
               child: const Text("ADD"),
             ),
